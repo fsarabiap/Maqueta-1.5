@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registro de gastos electorales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A1B33;--navy2:#13294B;--red:#D3202B;--paper:#F3F4F6;--white:#fff;--ink:#0A1B33;--mute:#5B6778;--rule:#C9CED6;
+--sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.5}
+header{background:var(--navy);color:#fff;border-bottom:6px solid var(--red)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-top:32px;padding-bottom:24px;flex-wrap:wrap}
+h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;letter-spacing:-.02em;line-height:1.1}
+header p{color:#AEB9CC;font-size:.95rem;margin-top:6px}
+.total{text-align:right}
+.total small{display:block;color:#AEB9CC;font-size:.8rem}
+.total b{font-family:var(--mono);font-size:1.6rem;font-weight:700}
+main{padding:32px 0 64px}
+h2{font-size:1.25rem;font-weight:600;margin-bottom:4px}
+.sub{color:var(--mute);font-size:.92rem;margin-bottom:20px}
+.crumbs{display:flex;gap:8px;flex-wrap:wrap;font-size:.88rem;margin-bottom:20px;color:var(--mute)}
+.crumbs button{background:none;border:0;border-bottom:1px solid var(--red);font:inherit;color:var(--navy);cursor:pointer;padding:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:2px solid var(--navy);border-left:1px solid var(--rule)}
+.opt{background:var(--white);border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:20px 18px;text-align:left;font:inherit;cursor:pointer;min-height:124px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;color:var(--ink)}
+.opt:hover{background:var(--navy);color:#fff}
+.opt:hover em{color:#fff}
+.opt strong{font-weight:600;font-size:1.02rem;line-height:1.25}
+.opt em{font-style:normal;font-family:var(--mono);font-size:.78rem;color:var(--red)}
+.ic{display:block;font-size:1.7rem;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;filter:grayscale(1) contrast(1.1)}
+.opt:hover .ic{filter:grayscale(1) brightness(1.8)}
+.tx strong{display:block;margin-bottom:6px}.tx em{display:block}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+form{background:var(--white);border-top:2px solid var(--navy);border:1px solid var(--rule);border-top:2px solid var(--navy);padding:24px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px 20px}
+label,.lbl{display:block;font-size:.85rem;font-weight:600;margin-bottom:5px}
+input,select{width:100%;font:inherit;padding:10px 11px;border:1px solid #8D97A6;border-radius:0;background:#fff;color:var(--ink)}
+input.m{font-family:var(--mono);font-weight:500;text-align:right}
+input[type=file]{padding:9px;background:var(--paper)}
+.err{color:var(--red);font-size:.8rem;min-height:1.1em;margin-top:3px}
+fieldset{border:0;padding:0;margin-top:22px}
+.pay{display:flex;gap:0;flex-wrap:wrap}
+.pay label{flex:1 1 200px;border:1px solid #8D97A6;padding:12px 14px;margin:0 -1px -1px 0;cursor:pointer;font-weight:500;display:flex;gap:10px;align-items:center}
+.pay input{width:auto;accent-color:var(--red)}
+.pay label:has(input:checked){background:var(--navy);color:#fff;border-color:var(--navy)}
+.files{font-size:.82rem;color:var(--mute);margin-top:4px}
+.btn{font:inherit;font-weight:600;border:0;padding:12px 22px;cursor:pointer;background:var(--red);color:#fff}
+.btn:hover{background:#B01822}
+.btn.alt{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+.btn.alt:hover{background:var(--navy);color:#fff}
+.actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.log{margin-top:48px}
+.bar{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.tw{overflow-x:auto;border-top:2px solid var(--navy);background:#fff}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:820px}
+th{text-align:left;font-weight:600;color:var(--mute);padding:10px 12px;border-bottom:1px solid var(--navy);font-size:.8rem}
+td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+td.n,th.n{text-align:right;font-family:var(--mono)}
+td.n{font-weight:500;white-space:nowrap}
+.tag{display:inline-block;padding:2px 8px;font-size:.78rem;font-weight:600;border:1px solid var(--navy)}
+.tag.p{background:var(--red);border-color:var(--red);color:#fff}
+.del{background:none;border:0;color:var(--red);cursor:pointer;font:inherit;text-decoration:underline}
+.empty{padding:28px;color:var(--mute);text-align:center}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 20px;border-left:5px solid var(--red);opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div><h1>Registro de gastos electorales</h1><p>Campaña — control de egresos y respaldos</p></div>
+  <div class="total"><small>Total registrado</small><b id="tot">$0</b></div>
+</div></header>
+
+<main class="wrap">
+  <nav class="crumbs" id="crumbs" aria-label="Ruta"></nav>
+
+  <section id="s1">
+    <h2>¿Qué tipo de gasto desea registrar?</h2>
+    <p class="sub">Elija una de las 23 categorías.</p>
+    <div class="grid" id="g1"></div>
+  </section>
+
+  <section id="s2" hidden>
+    <h2>Seleccione la subcategoría</h2>
+    <p class="sub" id="s2sub"></p>
+    <div class="grid" id="g2"></div>
+  </section>
+
+  <section id="s3" hidden>
+    <h2 id="s3t">Datos del gasto</h2>
+    <p class="sub" id="s3sub"></p>
+    <form id="f" novalidate>
+      <div class="fields">
+        <div><label for="rut">Rut proveedor</label><input id="rut" placeholder="12.345.678-5" autocomplete="off" inputmode="text"><div class="err" id="e-rut"></div></div>
+        <div><label for="prov">Nombre del proveedor</label><input id="prov" autocomplete="off"><div class="err" id="e-prov"></div></div>
+        <div><label for="tdoc">Tipo de documento</label>
+          <select id="tdoc"><option value="">Seleccione…</option><option>Factura afecta</option><option>Factura exenta</option><option>Boleta</option><option>Boleta de honorarios</option><option>Boleta de venta y servicios</option><option>Contrato / Convenio</option><option>Otro</option></select><div class="err" id="e-tdoc"></div></div>
+        <div><label for="ndoc">Número de factura o boleta</label><input id="ndoc" class="m" inputmode="numeric" autocomplete="off"><div class="err" id="e-ndoc"></div></div>
+        <div><label for="fecha">Fecha de documento</label><input id="fecha" type="date"><div class="err" id="e-fecha"></div></div>
+        <div><label for="monto">Monto (CLP)</label><input id="monto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-monto"></div></div>
+      </div>
+      <fieldset>
+        <legend class="lbl">Forma de pago</legend>
+        <div class="pay">
+          <label><input type="radio" name="pago" value="Pago Efectivo" checked> Pago Efectivo</label>
+          <label><input type="radio" name="pago" value="Pendiente de Pago"> Pendiente de Pago</label>
+        </div>
+      </fieldset>
+      <div style="margin-top:22px"><label for="arch">Adjuntar archivos (factura, boleta, comprobante)</label>
+        <input id="arch" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx">
+        <div class="files" id="fl"></div></div>
+      <div class="actions"><button class="btn" type="submit">Guardar gasto</button><button class="btn alt" type="button" id="cancel">Cancelar</button></div>
+    </form>
+  </section>
+
+  <section class="log">
+    <div class="bar"><div><h2>Gastos registrados</h2><p class="sub" style="margin:0" id="cnt"></p></div>
+      <button class="btn alt" id="csv" type="button">Exportar CSV</button></div>
+    <div class="tw"><table><thead><tr><th>Fecha</th><th>Tipo / subcategoría</th><th>Proveedor</th><th>Documento</th><th>Pago</th><th>Archivos</th><th class="n">Monto</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const I=["📰", "📻", "📱", "🖨️", "🎤", "📊", "🏢", "🚐", "🪑", "🚚", "🏨", "🍽️", "🧢", "🧒", "🤝", "🧾", "💬", "🗺️", "📣", "🧩", "🚕", "✈️", "🛒"];
+const SI=["📰 🏙️ 🏘️ 📖 🌐 🖼️ 📧 ✍️ 🎨 📑", "📻 📡 📍 🗣️ 🏷️ 🎚️ 🎙️ 🎵 👥 💻", "👍 📷 🎵 ✖️ ▶️ 🔎 💬 💰 🚀 🤳", "🖼️ 📄 🚩 🏙️ 🎏 📑 👕 👜 🏷️ 🎨", "🏟️ 🎭 🎛️ 📽️ 🥂 🎶 🛡️ 📋 🎈 🚌", "📊 🗨️ 👥 🌍 📞 🚶 💻 🗃️ 📈 🧠", "🏢 🏛️ 🏠 🚪 💼 📦 🧾 💡 📶 🛋️", "🚗 🛻 🚐 🚌 🚕 ⛽ 🛣️ 🅿️ 🛡️ 👤", "🪑 ⛺ 🔊 💻 ⚡ 📽️ 🚻 🎭 🚧 📦", "🚚 🛻 🚐 📦 👤 ⛽ 🛣️ 🏗️ 🛡️ 🅿️", "🏨 🛏️ 🏠 🛖 🏢 🌙 📅 ☕ 🔑 🧳", "🍲 🥐 🍞 🍝 🥪 🍱 🍽️ 🥤 ☕ 🍳", "🦺 📬 🖼️ 📢 📋 🧭 🚐 🕐 🕗 💵", "🧒 🧓 ♿ 🍼 🩺 🕗 🕐 🎪 🌙 🤲", "📣 📺 🗞️ 🔄 👷 🎬 🎟️ 🧠 🖥️ 🔗", "🗓️ 🕗 🧾 📝 🧮 📒 💳 🎓 🗂️ 🧳", "💬 ♟️ 🎞️ 🎨 ✂️ 📷 🎯 📈 👥 📑", "🏘️ 🗺️ 📍 🧭 ⭐ 🗓️ 🕗 🧳 🚙 🤝", "🗓️ 🕗 🎤 ✍️ 📰 📺 📄 📆 ✂️ 🗨️", "⚖️ ♟️ 🛡️ 🧹 🖨️ 💻 📷 🌐 🛠️ 🧩", "🚕 🚍 ⛽ 🛣️ 🅿️ 🚌 🚖 🚇 🚶 🔁", "✈️ 🛩️ 🌎 🔄 🧳 🎫 🚐 🛫 🛡️ 🧭", "✏️ 🧴 📠 📮 🔧 📚 📱 🥪 🛠️ 🧾"];
+const T=[
+ ["Propaganda en medios de prensa escrito y digital","Aviso en diario nacional;Aviso en diario regional;Aviso en diario local;Aviso en revista;Publicidad en medio digital;Banner en sitio web;Publicidad en newsletter;Publirreportaje;Diseño de aviso;Inserto o encarte"],
+ ["Propaganda en radioemisoras","Spot radial nacional;Spot radial regional;Spot radial local;Mención en programa;Auspicio de programa;Producción de spot;Locución;Jingle y musicalización;Radio comunitaria;Radio online"],
+ ["Propaganda en plataforma de redes sociales","Facebook;Instagram;TikTok;X;YouTube;Google Ads;WhatsApp y mensajería;Producción de contenido pagado;Promoción de publicaciones;Publicidad con creadores de contenido"],
+ ["Propaganda impresa y merchandising","Afiches;Volantes y folletos;Pendones y lienzos;Gigantografías;Pasacalles;Dípticos y trípticos;Poleras y gorros;Bolsas y lápices;Stickers y banderines;Diseño gráfico"],
+ ["Evento de apertura o cierre de campaña electoral","Arriendo de recinto;Escenario y estructuras;Sonido e iluminación;Pantallas y audiovisual;Alimentación y cóctel;Animación y artistas;Seguridad;Permisos y autorizaciones;Decoración y ambientación;Traslado de asistentes"],
+ ["Encuestas","Encuesta cuantitativa;Encuesta cualitativa;Focus group;Estudio de opinión pública;Encuesta telefónica;Encuesta presencial;Encuesta online;Procesamiento de datos;Informe de resultados;Análisis y consultoría"],
+ ["Arriendo de Sede o arriendo de espacio privado","Sede central;Sede comunal;Sede local;Salón o espacio privado;Oficina;Bodega;Gastos comunes;Electricidad y agua;Internet y telefonía;Habilitación y mobiliario"],
+ ["Arriendo de vehículos para traslado de personal de apoyo","Automóvil;Camioneta;Van o minibús;Bus;Taxi o vehículo con conductor;Combustible;Peajes;Estacionamiento;Seguro del vehículo;Conductor"],
+ ["Arriendos de bienes muebles","Mesas y sillas;Toldos y carpas;Equipos de sonido;Equipos computacionales;Generadores eléctricos;Pantallas y proyectores;Baños químicos;Escenarios modulares;Vallas y estructuras;Otros bienes muebles"],
+ ["Arriendo de vehículos para transporte de material electoral","Camión;Camioneta de carga;Furgón;Flete;Conductor;Combustible;Peajes;Carga y descarga;Seguro de carga;Estacionamiento"],
+ ["Servicios relacionados a gastos por alojamientos del personal de apoyo de la campaña","Hotel;Hostal;Residencial;Cabaña;Departamento amoblado;Alojamiento por día;Alojamiento por semana;Desayuno incluido;Reserva y gestión;Otros servicios de alojamiento"],
+ ["Servicios prestados por alimentación del personal de apoyo de la campaña","Almuerzos;Desayunos;Onces;Cenas;Colaciones;Banquetería;Restaurante;Agua y bebidas;Coffee break;Cocina en terreno"],
+ ["Servicios remunerados de brigadistas","Brigadista en terreno;Repartidor de propaganda;Pegado de afiches;Promotor;Coordinador de brigada;Jefe de brigada;Conductor de brigada;Jornada parcial;Jornada completa;Bono de movilización"],
+ ["Servicios remunerados cuidadores de menores o personas","Cuidador de menores;Cuidador de adultos mayores;Cuidador de personas con discapacidad;Niñera;Técnico en enfermería;Jornada completa;Jornada parcial;Cuidado durante eventos;Cuidado nocturno;Otros servicios de cuidado"],
+ ["Servicios prestados por medio de agencia, subcontratación o tercerización","Agencia de publicidad;Agencia de medios;Agencia de comunicaciones;Empresa de servicios transitorios;Subcontratación de personal;Productora audiovisual;Empresa de eventos;Consultora;Empresa de marketing digital;Otra tercerización"],
+ ["Servicios remunerados del administrador electoral","Honorarios mensuales;Honorarios por jornada;Boleta de honorarios;Contrato;Asesoría contable;Rendición de cuentas;Gestión de pagos;Capacitación;Gastos de oficina;Viáticos"],
+ ["Servicio de gestión Integral de Redes Sociales y Contenidos Digitales","Community manager;Estrategia digital;Producción de contenido;Diseño gráfico;Edición de video;Fotografía;Gestión de pauta digital;Monitoreo y analítica;Gestión de comunidad;Reportes mensuales"],
+ ["Servicio de Coordinación territorial","Coordinador comunal;Coordinador regional;Coordinador distrital;Coordinador de sector;Jefe territorial;Honorarios mensuales;Honorarios por jornada;Viáticos;Movilización;Gestión de equipos"],
+ ["Servicio de encargado de comunicaciones","Honorarios mensuales;Honorarios por jornada;Vocería;Redacción de contenidos;Gestión de prensa;Relaciones con medios;Comunicados;Coordinación de agenda;Edición;Comunicación interna"],
+ ["Servicios Adicionales prestados para la campaña","Asesoría legal;Asesoría estratégica;Servicio de seguridad;Servicio de aseo;Servicio de impresión;Servicio informático;Servicio de fotografía;Servicio de traducción;Soporte técnico;Otros servicios"],
+ ["Gastos por desplazamiento","Taxi o aplicación;Transporte público;Combustible;Peajes;Estacionamiento;Buses interurbanos;Colectivos;Metro;Traslado en terreno;Reembolso de traslados"],
+ ["Transporte Aéreo","Pasaje nacional;Pasaje regional;Pasaje internacional;Cambio de pasaje;Equipaje adicional;Tasa de embarque;Traslado al aeropuerto;Vuelo chárter;Seguro de viaje;Agencia de viajes"],
+ ["Gastos menores o frecuentes","Útiles de oficina;Artículos de aseo;Fotocopias;Correspondencia y courier;Ferretería;Librería;Comunicaciones y recargas;Colaciones menores;Mantención menor;Otros gastos menores"]
+].map(([n,s],k)=>({n,i:I[k],s:s.split(";"),si:SI[k].split(" ")}));
+const $=id=>document.getElementById(id);
+const fmt=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n);
+let st={t:null,s:null}, rows=[];
+try{rows=JSON.parse(localStorage.getItem("gastos")||"[]")}catch(e){}
+const save=()=>{try{localStorage.setItem("gastos",JSON.stringify(rows))}catch(e){}};
+const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2200)};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function show(step){
+  ["s1","s2","s3"].forEach((id,i)=>$(id).hidden=(i+1)!==step);
+  const c=$("crumbs");c.innerHTML="";
+  if(step>1){
+    const b=document.createElement("button");b.textContent="Tipos de gasto";b.onclick=()=>{st={t:null,s:null};show(1)};c.append(b);
+    if(step===2){c.append(" / "+T[st.t].n)}
+    if(step===3){const b2=document.createElement("button");b2.textContent=T[st.t].n;b2.onclick=()=>show(2);c.append(" / ",b2," / "+T[st.t].s[st.s])}
+  }
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+T.forEach((t,i)=>{
+  const b=document.createElement("button");b.className="opt";b.type="button";
+  b.innerHTML=`<span class="ic" aria-hidden="true">${t.i}</span><span class="tx"><strong>${t.n}</strong><em>10 subcategorías</em></span>`;
+  b.onclick=()=>{st.t=i;$("s2sub").textContent=t.n;
+    $("g2").innerHTML="";
+    t.s.forEach((s,j)=>{const x=document.createElement("button");x.className="opt";x.type="button";x.innerHTML=`<span class="ic" aria-hidden="true">${t.si[j]}</span><span class="tx"><strong>${s}</strong><em>Registrar</em></span>`;
+      x.onclick=()=>{st.s=j;$("s3t").textContent=t.si[j]+" "+s;$("s3sub").textContent=t.n;$("f").reset();$("fl").textContent="";clr();show(3)};$("g2").append(x)});
+    show(2)};
+  $("g1").append(b);
+});
+
+// RUT
+const cleanRut=v=>v.replace(/[^0-9kK]/g,"").toUpperCase();
+function dv(body){let s=0,m=2;for(let i=body.length-1;i>=0;i--){s+=+body[i]*m;m=m===7?2:m+1}const r=11-(s%11);return r===11?"0":r===10?"K":String(r)}
+function fmtRut(v){v=cleanRut(v);if(v.length<2)return v;const b=v.slice(0,-1),d=v.slice(-1);return b.replace(/\B(?=(\d{3})+(?!\d))/g,".")+"-"+d}
+function rutOk(v){v=cleanRut(v);return v.length>=8&&dv(v.slice(0,-1))===v.slice(-1)}
+$("rut").addEventListener("input",e=>e.target.value=fmtRut(e.target.value));
+$("monto").addEventListener("input",e=>{const n=e.target.value.replace(/\D/g,"");e.target.value=n?Number(n).toLocaleString("es-CL"):""});
+$("ndoc").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));
+$("arch").addEventListener("change",e=>{$("fl").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
+$("cancel").onclick=()=>show(2);
+
+const clr=()=>document.querySelectorAll(".err").forEach(e=>e.textContent="");
+$("f").addEventListener("submit",e=>{
+  e.preventDefault();clr();let ok=true;
+  const bad=(k,m)=>{$("e-"+k).textContent=m;ok=false};
+  if(!rutOk($("rut").value))bad("rut","Ingrese un RUT válido.");
+  if(!$("prov").value.trim())bad("prov","Ingrese el nombre del proveedor.");
+  if(!$("tdoc").value)bad("tdoc","Seleccione el tipo de documento.");
+  if(!$("ndoc").value)bad("ndoc","Ingrese el número del documento.");
+  if(!$("fecha").value)bad("fecha","Seleccione la fecha.");
+  const monto=+$("monto").value.replace(/\D/g,"");
+  if(!monto)bad("monto","Ingrese un monto mayor a cero.");
+  if(!ok)return;
+  rows.unshift({id:Date.now(),tipo:T[st.t].n,sub:T[st.t].s[st.s],rut:$("rut").value,prov:$("prov").value.trim(),
+    tdoc:$("tdoc").value,ndoc:$("ndoc").value,fecha:$("fecha").value,monto,
+    pago:document.querySelector("input[name=pago]:checked").value,
+    arch:[...$("arch").files].map(f=>f.name)});
+  save();render();st={t:null,s:null};show(1);toast("Gasto registrado");
+});
+
+function render(){
+  $("tot").textContent=fmt(rows.reduce((a,r)=>a+r.monto,0));
+  $("cnt").textContent=rows.length+(rows.length===1?" registro":" registros");
+  $("tb").innerHTML=rows.length?rows.map(r=>`<tr>
+    <td>${r.fecha.split("-").reverse().join("/")}</td>
+    <td><strong>${esc(r.tipo)}</strong><br><span style="color:var(--mute)">${esc(r.sub)}</span></td>
+    <td>${esc(r.prov)}<br><span style="font-family:var(--mono);font-size:.8rem;color:var(--mute)">${esc(r.rut)}</span></td>
+    <td>${esc(r.tdoc)}<br><span style="font-family:var(--mono);font-size:.8rem">N° ${esc(r.ndoc)}</span></td>
+    <td><span class="tag ${r.pago.startsWith("Pend")?"p":""}">${esc(r.pago)}</span></td>
+    <td>${r.arch.length?r.arch.map(esc).join("<br>"):"—"}</td>
+    <td class="n">${fmt(r.monto)}</td>
+    <td><button class="del" data-id="${r.id}">Eliminar</button></td></tr>`).join("")
+   :`<tr><td colspan="8" class="empty">Aún no hay gastos. Elija un tipo de gasto para registrar el primero.</td></tr>`;
+}
+$("tb").addEventListener("click",e=>{const id=e.target.dataset.id;if(id&&confirm("¿Eliminar este gasto?")){rows=rows.filter(r=>r.id!=id);save();render()}});
+$("csv").onclick=()=>{
+  if(!rows.length)return toast("No hay gastos para exportar");
+  const h=["Fecha","Tipo de gasto","Subcategoría","Rut proveedor","Proveedor","Tipo de documento","N° documento","Monto","Forma de pago","Archivos"];
+  const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const c=[h.map(q).join(";")].concat(rows.map(r=>[r.fecha,r.tipo,r.sub,r.rut,r.prov,r.tdoc,r.ndoc,r.monto,r.pago,r.arch.join(" | ")].map(q).join(";"))).join("\n");
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+c],{type:"text/csv;charset=utf-8"}));a.download="gastos-electorales.csv";a.click();
+};
+render();show(1);
+</script>
+</body>
+</html>
