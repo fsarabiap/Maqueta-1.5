@@ -73,7 +73,7 @@ td.n{font-weight:500;white-space:nowrap}
 </head>
 <body>
 <header><div class="wrap">
-  <div><h1>Registro de gastos electorales</h1><p>Campaña — control de egresos y respaldos</p></div>
+  <div><h1>Registro de gastos electorales</h1><p>Campaña — Control de egresos y respaldos</p></div>
   <div class="total"><small>Total registrado</small><b id="tot">$0</b></div>
 </div></header>
 
@@ -82,7 +82,7 @@ td.n{font-weight:500;white-space:nowrap}
 
   <section id="s1">
     <h2>¿Qué tipo de gasto desea registrar?</h2>
-    <p class="sub">Elija una de las 23 categorías.</p>
+    <p class="sub">Elija una de las siguientes categorías.</p>
     <div class="grid" id="g1"></div>
   </section>
 
@@ -129,7 +129,7 @@ td.n{font-weight:500;white-space:nowrap}
 
 <script>
 const I=["📰", "📻", "📱", "🖨️", "🎤", "📊", "🏢", "🚐", "🪑", "🚚", "🏨", "🍽️", "🧢", "🧒", "🤝", "🧾", "💬", "🗺️", "📣", "🧩", "🚕", "✈️", "🛒", "💲"];
-const SI=["📰 📞 📖 🌐 🖼️ 📧 🗣️ 📑", "📻 📡 📍 👥 💻", "👍 📷 🎵 ✖️ ▶️ 🔎 💬 🤳", "🖼️ 📄 🚩 🏙️ 🎏 📑 👕 👜 🏷️", "🎶 🎭 🎛️ 📽️ 🎶", "📊 🗨️ 👥 🌍 📞 🚶 💻 🗃️ 📈 🧠", "🏢 🚪 🏛️ 📺 🏠 💼 📦 🧾 💡 📶 🛋️", "🚗 🚐 🚌", "🪑 ⛺ 🔊 💻 ⚡ 📽️ 💡 🎭 🖨️", "🚚📦", "🏨 🛏️ 🏠", "🍲 🥐 🍞 🍝 🥪 🍱", "🦺 📬 🖼️ 📢 📋 🧭 🚐 🕐 🕗 💵", "🧒 🧓 ♿ 🍼 🩺 🕗 🕐 🎪 🌙 🤲", "📣 📺 🗞️ 🔄 👷 🎬 🎟️ 🧠 🖥️ 🔗", "🗓️ 🕗 🧾 📝 🧮 📒 💳 🎓 🗂️ 🧳", "💬 ♟️ 🎞️ 🎨 ✂️ 📷 🎯 📈 👥 📑", "🏘️ 🗺️ 📍 🧭 ⭐ 🗓️ 🕗 🧳 🚙 🤝", "🗓️ 🕗 🎤 ✍️ 📰 📺 📄 📆 ✂️ 🗨️", "⚖️ ♟️ 🛡️ 🧹 🖨️ 💻 📷 🌐 🛠️ 🧩", "🚕 🚍 ⛽ 🛣️ 🅿️ 🚌 🚖 🚇 🚶 🔁", "✈️ 🛩️ 🌎 🔄 🧳 🎫 🚐 🛫 🛡️ 🧭", "✏️ 🧴 📠 📮 🔧 📚 📱 🥪 🛠️ 🧾","💡 💧 📞"];
+const SI=["📰 📞 📖 🌐 🖼️ 📧 🗣️ 📑", "📻 📡 📍 👥 💻", "👍 📷 🎵 ✖️ ▶️ 🔎 💬 🤳", "🖼️ 📄 🚩 🏙️ 🎏 📑 👕 👜 🏷️", "🎶 🎭 🎛️ 📽️ 🎶", "📊 🗨️ 👥 🌍 📞 🚶 💻 🗃️ 📈 🧠", "🏢 🚪 🏛️ 📺 🏠 💼 📦 🧾 💡 📶 🛋️", "🚗 🚐 🚌", "🪑 ⛺ 🔊 💻 ⚡ 📽️ 💡 🎭 🖨️", "🚚📦", "🏨 🛏️ 🏠", "🍲 🥐 🍞 🍝 🥪 🍱", "🦺 📬 🖼️ 📢 📋 🧭 🚐 🕐 🕗 💵", "🧒 🧓 ♿ 🍼 🩺 🕗 🕐 🎪 🌙 🤲", "📣 📺 🗞️ 🔄 👷 🎬 🎟️ 🧠 🖥️ 🔗", "🗓️ 🕗 🧾 📝 🧮 📒 💳 🎓 🗂️ 🧳", "💬 ♟️ 🎞️ 🎨 ✂️ 📷 🎯 📈 👥 📑", "🏘️ 🗺️ 📍 🧭 ⭐ 🗓️ 🕗 🧳 🚙 🤝", "🗓️ 🕗 🎤 ✍️ 📰 📺 📄 📆 ✂️ 🗨️", "⚖️ ♟️ 🛡️ 🧹 🖨️ 💻 📷 🌐 🛠️ 🧩", "🚕 🚍 ⛽ 🛣️ 🅿️ 🚌 🚖 🚇 🚶 🔁", "✈️ 🛩️ 🌎 🔄 🧳 🎫 🚐 🛫 🛡️ 🧭", "✏️ 🧴 🅿️ ☀ 🔧 📚 ☕ 🥪 🛠️🚗 🧾","💡 💧 📞"];
 const T=[
  ["Propaganda en medios de prensa escrito y digital","Aviso en Medios o Prensa Escrita;Servicios de contacto telefónico;Aviso en revista;Publicidad en medio digital;Banner en sitio web;Servicios de mensajeria;Servicios de publicidad móvil, megafonía ;Servicios de contacto telefónico"],
  ["Propaganda en radioemisoras","Spot radial nacional;Spot radial regional;Spot radial local;Radio comunitaria;Radio online"],
@@ -153,7 +153,7 @@ const T=[
  ["Servicios Adicionales prestados para la campaña","Asesoría legal;Asesoría estratégica;Servicio de seguridad;Servicio de aseo;Servicio de impresión;Servicio informático;Servicio de fotografía;Servicio de traducción;Soporte técnico;Otros servicios"],
  ["Gastos por desplazamiento","Taxi o aplicación;Transporte público;Combustible;Peajes;Estacionamiento;Buses interurbanos;Colectivos;Metro;Traslado en terreno;Reembolso de traslados"],
  ["Transporte Aéreo","Pasaje nacional;Pasaje regional;Pasaje internacional;Cambio de pasaje;Equipaje adicional;Tasa de embarque;Traslado al aeropuerto;Vuelo chárter;Seguro de viaje;Agencia de viajes"],
- ["Gastos menores o frecuentes","Útiles de oficina;Artículos de aseo;Fotocopias;Correspondencia y courier;Ferretería;Librería;Comunicaciones y recargas;Colaciones menores;Mantención menor;Otros gastos menores"],
+ ["Gastos menores o frecuentes","Artículos de oficina;Artículos de aseo;Estacionamientos;Bloqueador Solar;Artículos de Ferretería;Librería;Articulos de Cafeteria;Colaciones menores;Mantención menor de Vehículo;Otros gastos de Supermercado"],
 ["Gastos Basicos","Luz;Agua;Telefonia"]
 ].map(([n,s],k)=>({n,i:I[k],s:s.split(";"),si:SI[k].split(" ")}));
 const $=id=>document.getElementById(id);
